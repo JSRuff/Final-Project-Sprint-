@@ -1,0 +1,42 @@
+
+<h1 class="mb-4">Customers Management</h1>
+
+<div class="card mb-4">
+  <div class="card-header">Register New Customer</div>
+  <div class="card-body">
+    <form id="customerForm">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// Register new customer
+document.getElementById('customerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  fetch('/customers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      password: document.getElementById('password').value
+    })
+  }).then(res => res.json()).then(data => {
+    alert(data.message);
+    location.reload();
+  });
+});
+</script>

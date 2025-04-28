@@ -1,0 +1,71 @@
+
+
+<h1 class="mb-4">Borrowings Management</h1>
+
+<div class="card mb-4">
+  <div class="card-header">Borrow a Book</div>
+  <div class="card-body">
+    <form id="borrowForm">
+      <div class="mb-3">
+        <label for="bookId" class="form-label">Book ID</label>
+        <input type="number" class="form-control" id="bookId" required>
+      </div>
+      <div class="mb-3">
+        <label for="customerId" class="form-label">Customer ID</label>
+        <input type="number" class="form-control" id="customerId" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Borrow</button>
+    </form>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">Return a Book</div>
+  <div class="card-body">
+    <form id="returnForm">
+      <div class="mb-3">
+        <label for="returnBookId" class="form-label">Book ID</label>
+        <input type="number" class="form-control" id="returnBookId" required>
+      </div>
+      <div class="mb-3">
+        <label for="returnCustomerId" class="form-label">Customer ID</label>
+        <input type="number" class="form-control" id="returnCustomerId" required>
+      </div>
+      <button type="submit" class="btn btn-success">Return</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// Borrow a book
+document.getElementById('borrowForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  fetch('/borrow', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      book_id: document.getElementById('bookId').value,
+      customer_id: document.getElementById('customerId').value
+    })
+  }).then(res => res.json()).then(data => {
+    alert(data.message);
+    location.reload();
+  });
+});
+
+// Return a book
+document.getElementById('returnForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  fetch('/return', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      book_id: document.getElementById('returnBookId').value,
+      customer_id: document.getElementById('returnCustomerId').value
+    })
+  }).then(res => res.json()).then(data => {
+    alert(data.message);
+    location.reload();
+  });
+});
+</script>
